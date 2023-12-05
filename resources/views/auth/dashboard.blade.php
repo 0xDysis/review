@@ -5,13 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Admin Dashboard</div>
 
                 <div class="card-body">
-                    You are logged in!
+                    <p>Welcome, {{ Auth::user()->name }}! You are logged in as an admin.</p>
+
+                    <!-- Add admin dashboard content here -->
+                    <p>Here, you can manage users, reviews, and other admin tasks.</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
