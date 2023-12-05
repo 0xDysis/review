@@ -49,6 +49,6 @@
             </div>
         @endforeach
 
-        {{ $games->links() }}
+        {{ $games->withQueryString()->links() }}
     </div>
 @endsection

@@ -30,31 +30,31 @@ class LocalGameService
         }
     }
     public function getGamesQuery(Request $request)
-    {
-        $query = LocalGame::query();
-    
-        // Filter by genre
-        if ($request->filled('genre')) {
-            $query->where('genre', 'like', '%' . $request->input('genre') . '%');
-        }
-    
-        
-        if ($request->filled('publication_year')) {
-            $query->where('publication_year', '=', $request->input('publication_year'));
-        }
-    
-        // Filter by average score
-        if ($request->filled('average_score')) {
-            $query->where('average_score', '>=', $request->input('average_score'));
-        }
-    
-        // Sort by selected field
-        if ($request->filled('sort_by')) {
-            $sortField = $request->input('sort_by');
-            $sortOrder = $request->input('sort_order', 'asc'); // Default to ascending order if not specified
-            $query->orderBy($sortField, $sortOrder);
-        }
-    
-        return $query;
+{
+    $query = LocalGame::query();
+
+    // Filter by genre
+    if ($request->filled('genre')) {
+        $query->where('genre', 'like', '%' . $request->input('genre') . '%');
     }
+
+    // Filter by publication year
+    if ($request->filled('publication_year')) {
+        $query->where('publication_year', '=', $request->input('publication_year'));
+    }
+
+    // Filter by average score
+    if ($request->filled('average_score')) {
+        $query->where('average_score', '>=', $request->input('average_score'));
+    }
+
+    // Sort by selected field
+    if ($request->filled('sort_by')) {
+        $sortField = $request->input('sort_by');
+        $sortOrder = $request->input('sort_order', 'asc'); // Default to ascending order if not specified
+        $query->whereNotNull($sortField)->orderBy($sortField, $sortOrder);
+    }
+
+    return $query;
+}
 }

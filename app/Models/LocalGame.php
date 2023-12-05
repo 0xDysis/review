@@ -22,7 +22,13 @@ class LocalGame extends Model
         'storyline',
         // Add other fields as needed
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'game_id');
+    }
 }
+
 
 
 

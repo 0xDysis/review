@@ -63,4 +63,18 @@ class User extends Authenticatable implements MustVerifyEmail
         // Replace 'moderator' with the appropriate value for your application
         return $this->role === 'moderator';
     }
+    
+public function reviews()
+{
+    return $this->hasMany(Review::class);
+}
+
+public function responses()
+{
+    return $this->hasMany(Response::class);
+}
+public function likes()
+{
+    return $this->hasMany(Like::class);
+}
 }
