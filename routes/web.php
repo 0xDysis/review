@@ -47,6 +47,8 @@ Route::get('/reviews/{review}/edit', [ReviewController::class, 'edit'])->name('r
 Route::put('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update')->middleware('auth');
 Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy')->middleware('auth');
 Route::post('/likes', [LikeController::class, 'store'])->name('likes.store')->middleware('auth');
+Route::put('/home', [HomeController::class, 'update'])->name('home.update');
+Route::get('/search', 'SearchController@search')->name('search');
 
 
 

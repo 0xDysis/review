@@ -21,7 +21,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'email',
         'password',
+        'profile_pic',
+        'banner', 
     ];
+
+    
+
 
     /**
      * The attributes that should be hidden for arrays.
@@ -64,17 +69,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role === 'moderator';
     }
     
-public function reviews()
-{
-    return $this->hasMany(Review::class);
-}
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 
-public function responses()
-{
-    return $this->hasMany(Response::class);
-}
-public function likes()
-{
-    return $this->hasMany(Like::class);
-}
+    public function responses()
+    {
+        return $this->hasMany(Response::class);
+    }
+    
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }
