@@ -67,6 +67,7 @@
             @endforeach
         </div>
 
-        {{ $games->withQueryString()->links() }}
+        {{ $games->withQueryString()->links('vendor.pagination.custom-pagination') }}
+
     </div>
 @endsection
