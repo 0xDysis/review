@@ -21,49 +21,71 @@
     </head>
 <body>
 <div id="app">
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
-            <ul class="navbar-nav">
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light {{ Route::currentRouteName() == 'home' || Route::currentRouteName() == 'browse' ? 'vertical-navbar' : 'horizontal-navbar' }}">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            @auth
                 <li class="nav-item active">
-                    <a class="nav-link" href="/home">Home</a>
+                    <a class="nav-link" href="/home">
+                        @if(Route::currentRouteName() == 'home' || Route::currentRouteName() == 'browse')
+                            <i class="fas fa-home"></i>
+                        @endif
+                        Home
+                    </a>
+                </li>
+            @endauth
+            <li class="nav-item">
+                <a class="nav-link" href="/browse">
+                    @if(Route::currentRouteName() == 'home' || Route::currentRouteName() == 'browse')
+                        <i class="fas fa-search"></i>
+                    @endif
+                    Browse
+                </a>
+            </li>
+            @guest
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/browse">Browse</a>
+                    <a class="nav-link" href="/register">Register</a>
                 </li>
-                @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">Register</a>
-                    </li>
-                @else
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ Auth::user()->name }}
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                @endguest
-            </ul>
-        </div>
-    </nav>
+            @else
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @if(Route::currentRouteName() == 'home' || Route::currentRouteName() == 'browse')
+                            <i class="fas fa-user"></i>
+                        @endif
+                        {{ Auth::user()->name }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                                @if(Route::currentRouteName() == 'home' || Route::currentRouteName() == 'browse')
+                                    <i class="fas fa-sign-out-alt"></i>
+                                @endif
+                                {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            @endguest
+        </ul>
+    </div>
+</nav>
+
+
+
 </div>
+
 
 
 

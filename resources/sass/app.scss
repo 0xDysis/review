@@ -4,7 +4,6 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 //* Variables */
-/* Variables */
 $body-bg: #ecf0f2;
 $font-family-sans-serif: 'Helvetica', sans-serif;
 $font-size-base: 0.9rem;
@@ -19,27 +18,55 @@ $neu-2: #d1d9e6;
 $text: #767676;
 
 /* Navbar styling */
-.navbar.bg-light {
+/* Navbar styling */
+.vertical-navbar {
+    position: fixed;
+    width: 10vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+    z-index: 1;
+    background-color: $neu-1 !important;
+    box-shadow: 4px 4px 4px $neu-2, -4px -4px 4px $white;
+    padding: 10px;
+    
+}
+
+.vertical-navbar .navbar-nav {
+    flex-direction: column;
+}
+
+/* ... rest of your CSS ... */
+
+.horizontal-navbar {
     position: relative;
-    width: 50vw;
-    margin: 20px auto 0; /* Add 20px margin to the top */
+    width: 70vh;
+    margin: 20px auto 0;
     border-radius: 10px;
     z-index: 1;
     background-color: $neu-1 !important;
     box-shadow: 4px 4px 4px $neu-2, -4px -4px 4px $white;
+    padding: 10px;
 }
 
 .navbar-light .navbar-nav .nav-link {
     color: $text !important;
-    transition: all 0.3s ease; /* Add transition */
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
 }
 
 .navbar-light .navbar-nav .nav-link:hover {
     color: $purple !important;
-    background-color: $neu-1; /* Add background color */
-    border-radius: 20px; /* Add border radius */
-    padding: 5px 20px; /* Add padding */
-    box-shadow: 4px 4px 4px $neu-2, -4px -4px 4px $white; /* Add box shadow */
+    background-color: $neu-1;
+    border-radius: 20px;
+    padding: 5px 20px;
+    box-shadow: 4px 4px 4px $neu-2, -4px -4px 4px $white;
+}
+
+.navbar-light .navbar-nav .nav-link i {
+    margin-right: 5px;
 }
 
 /* Style for all buttons */

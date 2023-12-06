@@ -17,7 +17,7 @@ class BrowseController extends Controller
 
     public function index(Request $request)
     {
-        $games = $this->localGameService->getGamesQuery($request)->paginate(10);
+        $games = $this->localGameService->getGamesQuery($request)->paginate(9);
 
         return view('browse', compact('games'));
     }

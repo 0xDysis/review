@@ -51,7 +51,7 @@ class LocalGameService
     // Sort by selected field
     if ($request->filled('sort_by')) {
         $sortField = $request->input('sort_by');
-        $sortOrder = $request->input('sort_order', 'asc'); // Default to ascending order if not specified
+        $sortOrder = $request->input('sort_order', 'desc'); // Default to ascending order if not specified
         $query->whereNotNull($sortField)->orderBy($sortField, $sortOrder);
     }
 
