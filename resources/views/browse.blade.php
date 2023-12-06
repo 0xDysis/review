@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@vite('resources/sass/browse.scss')
     <div class="container">
         <form method="GET" action="{{ route('browse') }}">
             <div class="form-group">
@@ -36,18 +37,35 @@
             <button type="submit" class="btn btn-primary">Filter</button>
         </form>
 
-        @foreach ($games as $game)
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="{{ route('games.show', $game) }}">{{ $game->name }}</a></h5>
-                    <p class="card-text">{{ $game->genre }}</p>
-                    <p class="card-text">{{ $game->publication_year }}</p>
-                    <p class="card-text">{{ $game->average_score }}</p>
-                    <p class="card-text">{{ $game->number_of_reviews }}</p>
-                    <!-- Display other game data as needed -->
+        <div class="wrapper">
+            @foreach ($games as $game)
+                <div class="card">
+                    <div class="poster">
+                    <img src="{{ $game->cover_image }}" alt="{{ $game->name }}">
+
+
+                    </div>
+                    <div class="details">
+                        <h1><a href="{{ route('games.show', $game) }}">{{ $game->name }}</a></h1>
+                        <h2>{{ $game->publication_year }} • {{ $game->genre }}</h2>
+                        <div class="rating">
+                            <!-- Replace with actual game rating -->
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>{{ $game->average_score }}/5</span>
+                        </div>
+                        <p class="desc">
+                            <!-- Replace with actual game description -->
+                            {{ $game->description }}
+                        </p>
+                        <!-- Add other game data as needed -->
+                    </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
 
         {{ $games->withQueryString()->links() }}
     </div>

@@ -24,11 +24,11 @@ $text: #767676;
 .card {
     background-color: $neu-1;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     box-shadow:
 		8px 8px 16px $neu-2,
 		-8px -8px 16px $white;
-   padding: 30px;
+   padding: 70px;
    margin-top: 0px;
 }
 
@@ -40,8 +40,8 @@ $text: #767676;
     font-size: 2em;
     font-weight: bold;
     padding: 0px; // Increase padding to the card header
-    letter-spacing: 0.01em; // Add some spacing between the letters
-    transform: scaleX(1.1); // Stretch the text horizontally
+    letter-spacing: 0.02em; // Add some spacing between the letters
+    transform: scaleX(1.6); // Stretch the text horizontally
 }
 
 
@@ -56,7 +56,7 @@ form {
 .form-control {
     background-color: $neu-1;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow:
         inset 2px 2px 2px $neu-2,
         inset -2px -2px 2px $white;
@@ -67,14 +67,16 @@ form {
     background-color: $neu-1;
     color: $text;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow:
         4px 4px 4px $neu-2,
         -4px -4px 4px $white;
     padding: 10px 30px; // Increase padding to the button
     margin-top: 0px; // Increase top margin to separate the button from the form controls
     margin-bottom: 20px; // Increase bottom margin to separate the form controls
+    
 }
+
 
 // Style the "Forgot Your Password?" link
 .forgot-password-link {

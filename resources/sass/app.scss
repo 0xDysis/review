@@ -4,6 +4,7 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 //* Variables */
+/* Variables */
 $body-bg: #ecf0f2;
 $font-family-sans-serif: 'Helvetica', sans-serif;
 $font-size-base: 0.9rem;
@@ -30,10 +31,15 @@ $text: #767676;
 
 .navbar-light .navbar-nav .nav-link {
     color: $text !important;
+    transition: all 0.3s ease; /* Add transition */
 }
 
 .navbar-light .navbar-nav .nav-link:hover {
     color: $purple !important;
+    background-color: $neu-1; /* Add background color */
+    border-radius: 20px; /* Add border radius */
+    padding: 5px 20px; /* Add padding */
+    box-shadow: 4px 4px 4px $neu-2, -4px -4px 4px $white; /* Add box shadow */
 }
 
 /* Style for all buttons */
@@ -41,7 +47,7 @@ button, .btn {
     background-color: $neu-1;
     color: $text;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 4px 4px 4px $neu-2, -4px -4px 4px $white;
     padding: 10px 20px;
 }
