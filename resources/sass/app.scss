@@ -78,3 +78,25 @@ button, .btn {
     box-shadow: 4px 4px 4px $neu-2, -4px -4px 4px $white;
     padding: 10px 20px;
 }
+.dropdown-menu {
+    background-color: var(--neu-1);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px var(--neu-2), -4px -4px 4px var(--white);
+    padding: 10px;
+}
+
+.dropdown-item {
+    background-color: var(--neu-1);
+    color: var(--text);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px var(--neu-2), -4px -4px 4px var(--white);
+    padding: 10px 20px;
+}
+
+.dropdown-item:hover {
+    background-color: var(--neu-1);
+    color: var(--purple);
+    box-shadow: inset 2px 2px 5px var(--neu-2), inset -2px -2px 5px var(--white);
+}

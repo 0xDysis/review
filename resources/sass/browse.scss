@@ -19,17 +19,20 @@ $neu-1: #ecf0f3;
 $neu-2: #d1d9e6;
 
 $text: #767676;
-/* Wrapper */
+
 .container {
-    margin-left: 10vw; 
-    padding-right: 5vw;
-}
+    width: 80vw; /* Adjust this value to set the desired width percentage */
+    height: 100vh; /* Adjust this value to set the desired height percentage */
+    
+    overflow-x: hidden;
+    padding-bottom: 20px;
+  }
 
 .wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 0 auto;
+    
     padding: 20px;
    
 }

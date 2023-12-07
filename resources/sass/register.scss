@@ -14,8 +14,12 @@ $text: #767676;
 
 
 
-
-/* register.css */
+.col-md-8 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
 .card {
     background-color: $neu-1;
@@ -24,8 +28,11 @@ $text: #767676;
     box-shadow:
 		8px 8px 16px $neu-2,
 		-8px -8px 16px $white;
-   padding: 70px;
-   margin-top: 30px;
+    padding: 50px;
+    height: 70vh; /* 70% of the viewport height */
+    width: 50vw; /* 50% of the viewport width */
+    margin-top: -10vh;
+    
 }
 
 .card-header {

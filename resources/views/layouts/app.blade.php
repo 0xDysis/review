@@ -32,9 +32,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/home">
                         @if(Route::currentRouteName() == 'home' || Route::currentRouteName() == 'browse')
-                            <i class="fas fa-home"></i>
+                            <i class="fas fa-user"></i>
                         @endif
-                        Home
+                        Profile
                     </a>
                 </li>
             @endauth
@@ -57,7 +57,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         @if(Route::currentRouteName() == 'home' || Route::currentRouteName() == 'browse')
-                            <i class="fas fa-user"></i>
+                            <i class="fas fa-sign-out-alt"></i>
                         @endif
                         {{ Auth::user()->name }}
                     </a>
@@ -95,9 +95,10 @@
             @yield('content')
         </main>
     </div>
-    <div id="myCanvas"></div>
+    
 
     @if (Request::is('login') || Request::is('register'))
+    <div id="myCanvas"></div>
 <script>
     var sketch = function(p) {
         
@@ -228,45 +229,7 @@ canvas.style('z-index', '-2');
     });
 </script>
 @endif
-<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchForm = document.querySelector('.search-form');
-            const searchInput = document.querySelector('.search-input');
-            const searchResultsContainer = document.querySelector('.search-results-container');
-            const searchCard = document.querySelector('.search-card');
 
-            searchForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const query = searchInput.value.trim();
-
-                if (query.length > 0) {
-                    fetchSearchResults(query);
-                }
-            });
-
-            searchInput.addEventListener('focus', function() {
-                searchCard.style.display = 'block';
-            });
-
-            searchInput.addEventListener('blur', function() {
-                searchCard.style.display = 'none';
-            });
-
-            async function fetchSearchResults(query) {
-                const response = await fetch(`/search?query=${encodeURIComponent(query)}`);
-                const searchResults = await response.json();
-
-                // Update the search results container with the new search results
-                searchResultsContainer.innerHTML = '';
-                searchResults.forEach(result => {
-                    const resultElement = document.createElement('div');
-                    resultElement.classList.add('search-result');
-                    resultElement.textContent = result.name; // Replace 'name' with the appropriate field from your search results
-                    searchResultsContainer.appendChild(resultElement);
-                });
-            }
-        });
-    </script>
 @vite('resources/js/app.js')
 </body>
 
