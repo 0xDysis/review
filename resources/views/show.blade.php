@@ -34,57 +34,69 @@
         <button type="submit" class="btn btn-primary">Submit Review</button>
     </form>
     @foreach ($game->reviews as $review)
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">{{ $review->title }}</h5>
-                <p class="card-text">Score: {{ $review->score }}</p>
-                <p class="card-text">{{ $review->content }}</p>
-                <p class="card-text">Reviewed by: {{ $review->user->name }}</p>
+        @if ($review->is_approved || auth()->id() == $review->user_id)
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $review->title }}</h5>
+                    <p class="card-text">Score: {{ $review->score }}</p>
+                    <p class="card-text">{{ $review->content }}</p>
+                    <p class="card-text">Reviewed by: {{ $review->user->name }}</p>
 
-                @if (auth()->id() == $review->user_id)
-                    <a href="{{ route('reviews.edit', $review) }}" class="btn btn-primary">Edit</a>
+                    @if (!$review->is_approved)
+                        <p class="waiting-for-approval">Waiting for approval</p>
+                    @endif
 
-                    <form method="POST" action="{{ route('reviews.destroy', $review) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                    <form method="POST" action="{{ route('likes.store') }}">
+                    @if (auth()->id() == $review->user_id)
+                        <a href="{{ route('reviews.edit', $review) }}" class="btn btn-primary">Edit</a>
+
+                        <form method="POST" action="{{ route('reviews.destroy', $review) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <form method="POST" action="{{ route('likes.store') }}">
+                            @csrf
+                            <input type="hidden" name="review_id" value="{{ $review->id }}">
+                            <button type="submit" class="btn btn-primary">Like</button>
+                        </form>
+                    @endif
+
+                    @foreach ($review->responses as $response)
+                        @if ($response->is_approved || auth()->id() == $response->user_id)
+                            <div class="card mt-4">
+                                <div class="card-body">
+                                    <p class="card-text">{{ $response->content }}</p>
+                                    @if (!$response->is_approved)
+                                        <p class="waiting-for-approval">Waiting for approval</p>
+                                    @endif
+                                    <p class="card-text">Responded by: {{ $response->user->name }}</p>
+
+                                    @if (auth()->id() == $response->user_id)
+                                        <a href="{{ route('responses.edit', $response) }}" class="btn btn-primary">Edit</a>
+
+                                        <form method="POST" action="{{ route('responses.destroy', $response) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+
+                    <form method="POST" action="{{ route('responses.store') }}">
                         @csrf
                         <input type="hidden" name="review_id" value="{{ $review->id }}">
-                        <button type="submit" class="btn btn-primary">Like</button>
-                    </form>
-                @endif
-
-                @foreach ($review->responses as $response)
-                    <div class="card mt-4">
-                        <div class="card-body">
-                            <p class="card-text">{{ $response->content }}</p>
-                            <p class="card-text">Responded by: {{ $response->user->name }}</p>
-
-                            @if (auth()->id() == $response->user_id)
-                                <a href="{{ route('responses.edit', $response) }}" class="btn btn-primary">Edit</a>
-
-                                <form method="POST" action="{{ route('responses.destroy', $response) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            @endif
+                        <div class="form-group">
+                            <label for="content">Your Response</label>
+                            <textarea id="content" name="content" class="form-control"></textarea>
                         </div>
-                    </div>
-                @endforeach
-
-                <form method="POST" action="{{ route('responses.store') }}">
-                    @csrf
-                    <input type="hidden" name="review_id" value="{{ $review->id }}">
-                    <div class="form-group">
-                        <label for="content">Your Response</label>
-                        <textarea id="content" name="content" class="form-control"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit Response</button>
-                </form>
+                        <button type="submit" class="btn btn-primary">Submit Response</button>
+                    </form>
+                </div>
             </div>
-        </div>
+        @endif
     @endforeach
 @endsection
+

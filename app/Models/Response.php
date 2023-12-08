@@ -9,7 +9,10 @@ class Response extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['content'];
+    protected $fillable = [
+        'content',
+        'is_approved', 
+    ];
 
     public function user()
     {
