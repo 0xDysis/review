@@ -20,14 +20,19 @@ class Review extends Model
         return $this->belongsTo(LocalGame::class, 'game_id');
     }
     
-    
     public function responses()
-{
-    return $this->hasMany(Response::class);
-}
-public function likes()
-{
-    return $this->hasMany(Like::class);
-}
+    {
+        return $this->hasMany(Response::class);
+    }
+
+    public function response()
+    {
+        return $this->hasOne(Response::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }
 

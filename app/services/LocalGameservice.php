@@ -23,38 +23,32 @@ class LocalGameService
                         'cover_image' => $gameData->cover->url ?? null,
                         'summary' => $gameData->summary,
                         'storyline' => $gameData->storyline,
-                        // Add other fields as needed
+                        
                     ]
                 );
             }
         }
     }
-    public function getGamesQuery(Request $request)
-{
-    $query = LocalGame::query();
 
-    // Filter by genre
-    if ($request->filled('genre')) {
-        $query->where('genre', 'like', '%' . $request->input('genre') . '%');
-    }
+    public function getGamesQuery(Request $request, $search = null)
+    {
+        $query = LocalGame::query();
 
-    // Filter by publication year
-    if ($request->filled('publication_year')) {
-        $query->where('publication_year', '=', $request->input('publication_year'));
-    }
+        if ($search) {
+            $query->where('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('genre', 'LIKE', '%' . $search . '%')
+                ->orWhere('publication_year', 'LIKE', '%' . $search . '%')
+                ->orWhere('average_score', 'LIKE', '%' . $search . '%');
+        }
 
-    // Filter by average score
-    if ($request->filled('average_score')) {
-        $query->where('average_score', '>=', $request->input('average_score'));
-    }
+        // Other filters...
 
-    // Sort by selected field
-    if ($request->filled('sort_by')) {
-        $sortField = $request->input('sort_by');
-        $sortOrder = $request->input('sort_order', 'desc'); // Default to ascending order if not specified
-        $query->whereNotNull($sortField)->orderBy($sortField, $sortOrder);
-    }
+        if ($request->filled('sort_by')) {
+            $sortField = $request->input('sort_by');
+            $sortOrder = $request->input('sort_order', 'asc'); // Default to ascending order if not specified
+            $query->whereNotNull($sortField)->orderBy($sortField, $sortOrder);
+        }
 
-    return $query;
+        return $query;
 }
 }

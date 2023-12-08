@@ -17,16 +17,25 @@ class BrowseController extends Controller
 
     public function index(Request $request)
     {
-        $games = $this->localGameService->getGamesQuery($request)->paginate(9);
-
+        $search = $request->input('search');
+        $sort_by = $request->input('sort_by', 'name'); // Default to 'name' if not provided
+        $sort_order = $request->input('sort_order', 'asc'); // Default to 'asc' if not provided
+    
+        $games = $this->localGameService->getGamesQuery($request, $search)->orderBy($sort_by, $sort_order)->paginate(9);
+    
         return view('browse', compact('games'));
     }
+
     public function show(LocalGame $game)
-{
-    return view('show', compact('game'));
+    {
+        return view('show', compact('game'));
+    }
 }
 
-}
+
+
+
+
 
 
 

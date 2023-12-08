@@ -6,8 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 {
     use HasFactory, Notifiable;
 
@@ -22,11 +24,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'profile_pic',
-        'banner', 
+        'banner',
+        'role', // Add role to fillable attributes if you want to assign it during mass assignment
     ];
-
-    
-
 
     /**
      * The attributes that should be hidden for arrays.
@@ -52,9 +52,8 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return bool
      */
-    public function isAdmin()
+    public function getIsAdminAttribute()
     {
-        // Replace 'admin' with the appropriate value for your application
         return $this->role === 'admin';
     }
 
@@ -67,6 +66,17 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         // Replace 'moderator' with the appropriate value for your application
         return $this->role === 'moderator';
+    }
+
+    /**
+     * Determine if the user can access the Filament panel.
+     *
+     * @param  \Filament\Panel  $panel
+     * @return bool
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return in_array($this->role, ['admin', 'moderator']);
     }
     
     public function reviews()
