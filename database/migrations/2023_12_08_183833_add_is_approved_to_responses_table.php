@@ -19,10 +19,10 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
         Schema::table('responses', function (Blueprint $table) {
-            //
+            $table->dropColumn('is_approved');
         });
     }
 };

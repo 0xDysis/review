@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ResponseResource\Pages;
@@ -11,6 +10,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\ToggleColumn;
+
 
 class ResponseResource extends Resource
 {
@@ -30,23 +31,27 @@ class ResponseResource extends Resource
     }
 
     public static function table(Table $table): Table
+{
+    return $table
+        ->columns([
+            TextColumn::make('user.name')
+                ->label('User'),
+            TextColumn::make('content')
+                ->label('Response Content'),
+            TextColumn::make('review.content')
+                ->label('Review Content'),
+            ToggleColumn::make('is_approved')
+                ->label('Approval Status'),
+        ])
+        ->actions([
+            EditAction::make(),
+        ]);
+}
+
+
+    public static function shouldShowApproveAction($record): bool
     {
-        return $table
-            ->columns([
-                TextColumn::make('user.name')
-                    ->label('User'),
-                TextColumn::make('content')
-                    ->label('Response Content'),
-                TextColumn::make('review.content')
-                    ->label('Review Content'),
-            ])
-            ->actions([
-                EditAction::make(),
-                Action::make('Approve')
-                    ->icon('heroicon-o-check')
-                    ->button(fn ($record) => !$record->is_approved ? 'indigo' : '') // Only show the button if the response is not approved
-                    ->action(fn ($action, $record) => static::approveResponseAction($action, $record)),
-            ]);
+        return !$record->is_approved; // Check the approval status of the Response model instance
     }
 
     public static function getRelations(): array
@@ -60,7 +65,6 @@ class ResponseResource extends Resource
     {
         return [
             'index' => Pages\ListResponses::route('/'),
-            'create' => Pages\CreateResponse::route('/create'),
             'edit' => Pages\EditResponse::route('/{record}/edit'),
         ];
     }
@@ -70,5 +74,10 @@ class ResponseResource extends Resource
         $response->update(['is_approved' => true]);
 
         return back()->with('success', 'Response approved successfully.');
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 }

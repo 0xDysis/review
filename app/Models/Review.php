@@ -10,6 +10,7 @@ class Review extends Model
 
     protected $fillable = ['title', 'content', 'score', 'is_approved'];
 
+   
     public function user()
     {
         return $this->belongsTo(User::class);

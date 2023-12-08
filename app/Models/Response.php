@@ -13,6 +13,10 @@ class Response extends Model
         'content',
         'is_approved', 
     ];
+    protected $casts = [
+        'is_approved' => 'boolean',
+    ];
+    
 
     public function user()
     {

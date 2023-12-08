@@ -11,6 +11,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\ToggleColumn;
+
 
 class ReviewResource extends Resource
 {
@@ -31,7 +33,7 @@ class ReviewResource extends Resource
                 TextInput::make('score')
                     ->label('Review Score')
                     ->required()
-                    ->numeric(), // Add validation rule to ensure the input is a number
+                    ->numeric(), 
             ]);
     }
 
@@ -47,15 +49,15 @@ class ReviewResource extends Resource
                     ->label('Review Content'),
                 TextColumn::make('score')
                     ->label('Review Score'),
+                ToggleColumn::make('is_approved')
+                    ->label('Approval Status'),
             ])
             ->actions([
                 EditAction::make(),
-                Action::make('Approve')
-                    ->icon('heroicon-o-check')
-                    ->button(fn ($record) => !$record->is_approved ? 'indigo' : '') // Only show the button if the review is not approved
-                    ->action(fn ($action, $record) => static::approveReviewAction($action, $record)),
             ]);
     }
+    
+    
 
     public static function getRelations(): array
     {
@@ -68,10 +70,10 @@ class ReviewResource extends Resource
     {
         return [
             'index' => Pages\ListReviews::route('/'),
-            'create' => Pages\CreateReview::route('/create'),
             'edit' => Pages\EditReview::route('/{record}/edit'),
         ];
     }
+    
 
     public static function approveReviewAction($action, Review $review)
     {
@@ -79,4 +81,10 @@ class ReviewResource extends Resource
 
         return back()->with('success', 'Review approved successfully.');
     }
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
 }
+
