@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReviewApiController;
+use App\Http\Controllers\ApiKeyController;  // Add this line
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,9 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/reviews', [ReviewApiController::class, 'index']);
-Route::get('/reviews/{id}', [ReviewApiController::class, 'show']);
+Route::middleware('client:api')->get('/reviews', [ReviewApiController::class, 'index']);
+Route::middleware('client:api')->get('/reviews/{id}', [ReviewApiController::class, 'show']);
+
 
 Route::post('/login', function (Request $request) {
     $credentials = $request->validate([
@@ -36,3 +38,5 @@ Route::post('/login', function (Request $request) {
 
     return response()->json(['message' => 'Invalid credentials'], 401);
 });
+
+Route::post('/api-keys', [ApiKeyController::class, 'createApiKey']);  // Add this line
