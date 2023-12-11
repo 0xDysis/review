@@ -55,6 +55,11 @@ class TokenResource extends Resource
         // Only allow admins to delete tokens
         return $user->role === 'admin';
     }
+    public static function canCreate(): bool
+{
+    return false;
+}
+
 
     public static function getRelations(): array
     {
