@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Laravel\Passport\ClientRepository;
-use Illuminate\Http\Request;
 
 class ApiKeyController extends Controller
 {
