@@ -28,7 +28,7 @@ $text: #767676;
     padding-bottom: 20px;
   }
 
-.wrapper {
+  .wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -36,6 +36,7 @@ $text: #767676;
     padding: 20px;
    
 }
+
 
 /* Card */
 .card {
@@ -46,7 +47,8 @@ $text: #767676;
     4px 4px 4px $neu-2,
     -4px -4px 4px #ffffff;
     margin-bottom: 20px;
-    width: calc(33.333% - 20px);
+    width: calc(90% - 20px);
+    height: 35vh;
     transition: all 0.3s ease-in-out;
     overflow: hidden;
 }

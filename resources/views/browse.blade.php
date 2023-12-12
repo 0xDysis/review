@@ -25,41 +25,37 @@
 
 
 
-
         <div class="wrapper">
             @foreach ($games as $game)
-                <div class="card">
-                    <div class="poster">
-                    <img src="{{ $game->cover_image }}" alt="{{ $game->name }}">
-
-
-                    </div>
-                    <div class="details">
-                        <h1><a href="{{ route('games.show', $game) }}">{{ $game->name }}</a></h1>
-                        <h2>{{ $game->publication_year }} • {{ $game->genre }}</h2>
-                        <div class="rating">
-                            <!-- Replace with actual game rating -->
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span>{{ $game->average_score }}/5</span>
+                <a href="{{ route('games.show', $game) }}" style="text-decoration: none; color: inherit;">
+                    <div class="card">
+                        <div class="poster">
+                            <img src="{{ $game->cover_image }}" alt="{{ $game->name }}">
                         </div>
-                        <p class="desc">
-                            <!-- Replace with actual game description -->
-                            {{ $game->description }}
-                        </p>
-                        <!-- Add other game data as needed -->
+                        <div class="details">
+                            <h1>{{ $game->name }}</h1>
+                            <h2>{{ $game->publication_year }} • {{ $game->genre }}</h2>
+                            <div class="rating">
+                                <!-- Replace with actual game rating -->
+                                <i class="fas fa-chart-bar"></i>
+                                
+                                <span>{{ $game->average_score }}/100</span>
+                            </div>
+                            <p class="desc">
+                                <!-- Replace with actual game description -->
+                                {{ $game->description }}
+                            </p>
+                            <!-- Add other game data as needed -->
+                        </div>
                     </div>
-                </div>
+                </a>
             @endforeach
         </div>
 
         {{ $games->withQueryString()->links('vendor.pagination.custom-pagination') }}
 
     </div>
-    @extends('layouts.app')
+   
 
 
 
