@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -31,4 +30,3 @@ class FetchAndStoreGames extends Command
         $this->info('Game data fetched and stored successfully!');
     }
 }
-
