@@ -1,15 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
+@vite('resources/sass/home.scss')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">
-                    <img src="{{ Auth::user()->banner }}" alt="User Banner">
-                    <img src="{{ Auth::user()->profile_pic }}" alt="Profile Picture">
+                <div class="card-header text-center">
+                    <div class="banner">
+                        <img src="{{ Auth::user()->banner }}" alt="User Banner" class="img-fluid">
+                    </div>
+                    <div class="profile-pic">
+                        <img src="{{ Auth::user()->profile_pic }}" alt="Profile Picture" class="rounded-circle">
+                    </div>
                     <h2>{{ Auth::user()->name }}</h2>
                 </div>
+
 
                 <div class="card-body">
                     <h3>Update Profile</h3>
