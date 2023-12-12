@@ -18,20 +18,19 @@
                         @method('PUT')
 
                         <div>
-    <label for="current_password">Current Password (only if changing password)</label>
-    <input id="current_password" type="password" name="current_password">
-</div>
+                            <label for="current_password">Current Password (only if changing password)</label>
+                            <input id="current_password" type="password" name="current_password">
+                        </div>
 
-<div>
-    <label for="new_password">New Password (only if changing password)</label>
-    <input id="new_password" type="password" name="new_password">
-</div>
+                        <div>
+                            <label for="new_password">New Password (only if changing password)</label>
+                            <input id="new_password" type="password" name="new_password">
+                        </div>
 
-<div>
-    <label for="new_password_confirmation">Confirm New Password (only if changing password)</label>
-    <input id="new_password_confirmation" type="password" name="new_password_confirmation">
-</div>
-
+                        <div>
+                            <label for="new_password_confirmation">Confirm New Password (only if changing password)</label>
+                            <input id="new_password_confirmation" type="password" name="new_password_confirmation">
+                        </div>
 
                         <div>
                             <label for="profile_pic">Profile Picture</label>
@@ -42,6 +41,9 @@
                             <label for="banner">Banner</label>
                             <input id="banner" type="file" name="banner">
                         </div>
+
+                        <input type="hidden" id="cropped_profile_pic" name="cropped_profile_pic">
+                        <input type="hidden" id="cropped_banner" name="cropped_banner">
 
                         <button type="submit">Update Profile</button>
                     </form>
@@ -73,5 +75,83 @@
         </div>
     </div>
 </div>
-@endsection
 
+<!-- Add the cropping modal -->
+<div class="modal fade" id="crop-modal" tabindex="-1" role="dialog" aria-labelledby="cropModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="cropModalLabel">Crop Image</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <img id="crop-image" src="" alt="Crop Image" style="max-width: 100%;">
+          </div>
+          <div class="modal-footer">
+              
+              <button type="button" class="btn btn-primary" id="crop-button">Crop</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+<!-- Add the JavaScript code for handling image selection and cropping -->
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const cropImage = document.getElementById('crop-image');
+    const cropper = new Cropper(cropImage, {
+        aspectRatio: 1, // Set the aspect ratio for the profile picture or banner
+        viewMode: 1,
+    });
+
+    const profilePicInput = document.getElementById('profile_pic');
+    const bannerInput = document.getElementById('banner');
+
+    profilePicInput.addEventListener('change', (event) => {
+        if (event.target.files && event.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                cropImage.src = e.target.result;
+                cropper.replace(e.target.result);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            $('#crop-modal').modal('show');
+        }
+    });
+
+    const cropButton = document.getElementById('crop-button');
+
+    cropButton.addEventListener('click', () => {
+        const croppedCanvas = cropper.getCroppedCanvas();
+        croppedCanvas.toBlob((blob) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                document.getElementById('cropped_profile_pic').value = reader.result;
+            };
+            reader.readAsDataURL(blob);
+
+            const file = new File([blob], 'cropped-image.png', { type: 'image/png' });
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            profilePicInput.files = dataTransfer.files;
+
+            $('#crop-modal').modal('hide');
+        });
+    });
+
+    const cancelButton = document.querySelector('[data-dismiss="modal"]');
+
+    if (cancelButton) {
+      cancelButton.addEventListener('click', () => {
+          $('#crop-modal').modal('hide');
+      });
+    }
+  });
+</script>
+@endsection

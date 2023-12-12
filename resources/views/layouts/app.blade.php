@@ -234,4 +234,3 @@ canvas.style('z-index', '-2');
 
 @vite('resources/js/app.js')
 </body>
-

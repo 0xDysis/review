@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -56,14 +57,20 @@ class HomeController extends Controller
         }
     
         // Update the profile picture
-        if ($request->hasFile('profile_pic')) {
-            $path = $request->file('profile_pic')->store('profile_pics', 'public');
+        if ($request->filled('cropped_profile_pic')) {
+            $imageData = $request->cropped_profile_pic;
+            $fileName = 'profile_pic_' . time() . '.png';
+            $path = 'profile_pics/' . $fileName;
+            Storage::disk('public')->put($path, base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData)));
             $user->profile_pic = $path;
         }
-    
+
         // Update the banner
-        if ($request->hasFile('banner')) {
-            $path = $request->file('banner')->store('banners', 'public');
+        if ($request->filled('cropped_banner')) {
+            $imageData = $request->cropped_banner;
+            $fileName = 'banner_' . time() . '.png';
+            $path = 'banners/' . $fileName;
+            Storage::disk('public')->put($path, base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData)));
             $user->banner = $path;
         }
     
@@ -73,6 +80,4 @@ class HomeController extends Controller
     }
     
 }
-
-
 

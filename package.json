@@ -15,6 +15,9 @@
     },
     "dependencies": {
         "autoprefixer": "^10.4.16",
+        "cropperjs": "^1.6.1",
+        "croppie": "^2.6.5",
+        "jquery": "^3.7.1",
         "p5": "^1.9.0",
         "postcss": "^8.4.32",
         "rollup-plugin-postcss": "^4.0.2",
