@@ -101,9 +101,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
-<!-- Add the JavaScript code for handling image selection and cropping -->
 <script>
-  document.addEventListener('DOMContentLoaded', (event) => {
+  window.onload = function() {
     const cropImage = document.getElementById('crop-image');
     const cropper = new Cropper(cropImage, {
         aspectRatio: 1, // Set the aspect ratio for the profile picture or banner
@@ -112,9 +111,24 @@
 
     const profilePicInput = document.getElementById('profile_pic');
     const bannerInput = document.getElementById('banner');
+    let activeInput = null;
 
     profilePicInput.addEventListener('change', (event) => {
         if (event.target.files && event.target.files[0]) {
+            activeInput = profilePicInput;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                cropImage.src = e.target.result;
+                cropper.replace(e.target.result);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            $('#crop-modal').modal('show');
+        }
+    });
+
+    bannerInput.addEventListener('change', (event) => {
+        if (event.target.files && event.target.files[0]) {
+            activeInput = bannerInput;
             const reader = new FileReader();
             reader.onload = (e) => {
                 cropImage.src = e.target.result;
@@ -132,14 +146,23 @@
         croppedCanvas.toBlob((blob) => {
             const reader = new FileReader();
             reader.onloadend = () => {
-                document.getElementById('cropped_profile_pic').value = reader.result;
+                if (activeInput === profilePicInput) {
+                    document.getElementById('cropped_profile_pic').value = reader.result;
+                } else if (activeInput === bannerInput) {
+                    document.getElementById('cropped_banner').value = reader.result;
+                }
             };
             reader.readAsDataURL(blob);
 
             const file = new File([blob], 'cropped-image.png', { type: 'image/png' });
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(file);
-            profilePicInput.files = dataTransfer.files;
+
+            if (activeInput === profilePicInput) {
+                profilePicInput.files = dataTransfer.files;
+            } else if (activeInput === bannerInput) {
+                bannerInput.files = dataTransfer.files;
+            }
 
             $('#crop-modal').modal('hide');
         });
@@ -152,6 +175,6 @@
           $('#crop-modal').modal('hide');
       });
     }
-  });
+  }
 </script>
 @endsection

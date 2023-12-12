@@ -38,8 +38,8 @@ class HomeController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'current_password' => ['required_with:new_password', 'nullable', 'password'],
-            'new_password' => ['required_with:current_password', 'nullable', 'confirmed', 'min:8'],
+            'current_password' => ['required_with:new_password', 'nullable', 'string', 'min:8'],
+            'new_password' => ['required_with:current_password', 'nullable', 'string', 'min:8', 'confirmed'],
             'profile_pic' => 'image|max:2048',
             'banner' => 'image|max:2048',
         ]);
