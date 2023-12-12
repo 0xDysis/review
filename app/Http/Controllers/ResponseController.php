@@ -55,11 +55,16 @@ class ResponseController extends Controller
         return redirect()->route('games.show', $response->review->game_id);
     }
 
+
     public function destroy(Response $response)
     {
         $response->delete();
 
         return back();
     }
+    public function show(Response $response)
+{
+    return view('show', compact('response'));
+}
 }
 

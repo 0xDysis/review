@@ -53,6 +53,9 @@ public function destroy(Review $review)
 
     return back();
 }
-
+public function show(Review $review)
+{
+    return view('show', compact('review'));
+}
 }
 

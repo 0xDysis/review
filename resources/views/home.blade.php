@@ -16,7 +16,6 @@
                     <h2>{{ Auth::user()->name }}</h2>
                 </div>
 
-
                 <div class="card-body">
                     <h3>Update Profile</h3>
                     <form method="POST" action="{{ route('home.update') }}" enctype="multipart/form-data">
@@ -54,33 +53,33 @@
                         <button type="submit">Update Profile</button>
                     </form>
 
-                    <h3>Favorites</h3>
-                    <div id="favorites">
-                        <!-- Display the user's favorite movies, books, or games here -->
-                    </div>
-
                     <h3>Review and Comment History</h3>
                     <div id="history">
-                        <h4>Reviews</h4>
-                        @foreach (Auth::user()->reviews as $review)
-                            <div>
-                                <h5>{{ $review->title }}</h5>
-                                <p>{{ $review->content }}</p>
-                            </div>
-                        @endforeach
-
-                        <h4>Responses</h4>
-                        @foreach (Auth::user()->responses as $response)
-                            <div>
-                                <p>{{ $response->content }}</p>
-                            </div>
-                        @endforeach
+                      <h4>Reviews</h4>
+                      @foreach (Auth::user()->reviews as $review)
+                          <div>
+                              <a href="/games/{{ $review->game_id }}#review-{{ $review->id }}">
+                                  <h5>{{ $review->title }}</h5>
+                                  <p>{{ $review->content }}</p>
+                              </a>
+                          </div>
+                      @endforeach
+                      
+                      <h4>Responses</h4>
+                      @foreach (Auth::user()->responses as $response)
+                          <div>
+                              <a href="/games/{{ $response->review->game_id }}#response-{{ $response->id }}">
+                                  <p>{{ $response->content }}</p>
+                              </a>
+                          </div>
+                      @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Add the cropping modal -->
 <div class="modal fade" id="crop-modal" tabindex="-1" role="dialog" aria-labelledby="cropModalLabel" aria-hidden="true">
