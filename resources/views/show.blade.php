@@ -40,7 +40,7 @@
                     <h5 class="card-title">{{ $review->title }}</h5>
                     <p class="card-text">Score: {{ $review->score }}</p>
                     <p class="card-text">{{ $review->content }}</p>
-                    <p class="card-text">Reviewed by: {{ $review->user->name }}</p>
+                    <p class="card-text">Reviewed by: <a href="{{ route('users.show', $review->user->id) }}">{{ $review->user->name }}</a></p>
 
                     @if (!$review->is_approved)
                         <p class="waiting-for-approval">Waiting for approval</p>
@@ -69,7 +69,7 @@
                                     @if (!$response->is_approved)
                                         <p class="waiting-for-approval">Waiting for approval</p>
                                     @endif
-                                    <p class="card-text">Responded by: {{ $response->user->name }}</p>
+                                    <p class="card-text">Responded by: <a href="{{ route('users.show', $response->user->id) }}">{{ $response->user->name }}</a></p>
 
                                     @if (auth()->id() == $response->user_id)
                                         <a href="{{ route('responses.edit', $response) }}" class="btn btn-primary">Edit</a>

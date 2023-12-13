@@ -8,7 +8,7 @@ use App\Http\Controllers\BrowseController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\LikeController;
-
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -44,6 +44,7 @@ Route::put('/home', [HomeController::class, 'update'])->name('home.update');
 Route::get('/search', 'SearchController@search')->name('search');
 Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
 Route::get('/responses/{response}', [ResponseController::class, 'show'])->name('responses.show');
+Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 
 
 

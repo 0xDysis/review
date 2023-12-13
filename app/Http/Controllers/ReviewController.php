@@ -35,7 +35,7 @@ public function update(Request $request, Review $review)
 {
     $request->validate([
         'title' => 'required|max:255',
-        'score' => 'required|integer|between:1,10',
+        'score' => 'required|integer|between:1,100',
         'content' => 'required',
     ]);
 
