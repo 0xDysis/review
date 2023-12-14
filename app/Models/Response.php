@@ -11,7 +11,9 @@ class Response extends Model
 
     protected $fillable = [
         'content',
-        'is_approved', 
+        'is_approved',
+        'user_id',
+        'review_id',
     ];
     protected $casts = [
         'is_approved' => 'boolean',

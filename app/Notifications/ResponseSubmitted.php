@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Response;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,12 +12,16 @@ class ResponseSubmitted extends Notification
 {
     use Queueable;
 
+    protected $response;
+
     /**
      * Create a new notification instance.
+     *
+     * @return void
      */
-    public function __construct()
+    public function __construct(Response $response)
     {
-        //
+        $this->response = $response;
     }
 
     /**

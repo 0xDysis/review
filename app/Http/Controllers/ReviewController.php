@@ -2,60 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreReviewRequest;
+use App\Http\Requests\UpdateReviewRequest;
 use App\Models\Review;
-use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    public function store(Request $request)
-{
-    $request->validate([
-        'title' => 'required',
-        'content' => 'required',
-        'score' => 'required|numeric',
-    ]);
+    public function store(StoreReviewRequest $request)
+    {
+        $review = Review::create([
+            'user_id' => auth()->id(),
+            'game_id' => $request->game_id,
+            'title' => $request->title,
+            'content' => $request->content,
+            'score' => $request->score,
+            'is_approved' => false,
+        ]);
 
-    $review = new Review;
-    $review->user_id = auth()->id();
-    $review->game_id = $request->game_id;
-    $review->title = $request->title;
-    $review->content = $request->content;
-    $review->score = $request->score;
-    $review->is_approved = false; // Set 'is_approved' to false by default
-    $review->save();
+        return back();
+    }
 
-    return back();
-}
     public function edit(Review $review)
-{
-    return view('reviews.edit', compact('review'));
+    {
+        return view('reviews.edit', compact('review'));
+    }
+
+    public function update(UpdateReviewRequest $request, Review $review)
+    {
+        $review->update($request->validated());
+
+        return redirect()->route('games.show', $review->game_id);
+    }
+
+    public function destroy(Review $review)
+    {
+        $review->delete();
+
+        return back();
+    }
+
+    public function show(Review $review)
+    {
+        return view('show', compact('review'));
+    }
 }
-
-public function update(Request $request, Review $review)
-{
-    $request->validate([
-        'title' => 'required|max:255',
-        'score' => 'required|integer|between:1,100',
-        'content' => 'required',
-    ]);
-
-    $review->title = $request->title;
-    $review->score = $request->score;
-    $review->content = $request->content;
-    $review->save();
-
-    return redirect()->route('games.show', $review->game_id);
-}
-
-public function destroy(Review $review)
-{
-    $review->delete();
-
-    return back();
-}
-public function show(Review $review)
-{
-    return view('show', compact('review'));
-}
-}
-

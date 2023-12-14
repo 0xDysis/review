@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Response;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreResponseRequest;
+use App\Http\Requests\UpdateResponseRequest;
 use App\Notifications\ResponseSubmitted;
 
 class ResponseController extends Controller
@@ -18,43 +19,39 @@ class ResponseController extends Controller
         return view('responses.index', compact('responses'));
     }
 
-    public function store(Request $request)
+    public function store(StoreResponseRequest $request)
+{
+    if (!auth()->check()) {
+        return redirect('login'); 
+    }
+
+    $response = Response::create([
+        'user_id' => auth()->id(),
+        'review_id' => $request->review_id,
+        'content' => $request->content,
+        'is_approved' => false,
+    ]);
+
+    
+    $review = $response->review;
+    $review->user->notify(new ResponseSubmitted($response));
+
+    return back();
+}
+
+   
+
+    public function update(UpdateResponseRequest $request, Response $response)
     {
-        $request->validate([
-            'content' => 'required',
-        ]);
-
-        $response = new Response;
-        $response->user_id = auth()->id();
-        $response->review_id = $request->review_id;
-        $response->content = $request->content;
-        $response->is_approved = false; // Set 'is_approved' to false by default
-        $response->save();
-
-        // Send notification
-        $review = $response->review;
-        $review->user->notify(new ResponseSubmitted($response));
-
-        return back();
+        $response->update($request->validated());
+    
+        return redirect()->route('games.show', $response->review->game_id);
     }
 
     public function edit(Response $response)
     {
         return view('responses.edit', compact('response'));
     }
-
-    public function update(Request $request, Response $response)
-    {
-        $request->validate([
-            'content' => 'required',
-        ]);
-
-        $response->content = $request->content;
-        $response->save();
-
-        return redirect()->route('games.show', $response->review->game_id);
-    }
-
 
     public function destroy(Response $response)
     {
