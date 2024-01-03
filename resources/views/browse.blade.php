@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@vite('resources/sass/browse.scss')
+
     <div class="container">
         <form method="GET" action="{{ route('browse') }}" class="search-form" id="search-form">
             <div class="form-group">

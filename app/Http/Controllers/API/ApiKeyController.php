@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Laravel\Passport\ClientRepository;
+use App\Http\Controllers\Controller;
 
 class ApiKeyController extends Controller
 {

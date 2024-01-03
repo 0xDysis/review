@@ -30,13 +30,13 @@ class HomeController extends Controller
     }
 
     /**
-     * Update the authenticated user's profile.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request)
-    {
+ * Update the authenticated user's profile.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @return \Illuminate\Http\RedirectResponse
+ */
+public function update(Request $request)
+{
         $request->validate([
             'current_password' => ['required_with:new_password', 'nullable', 'string', 'min:8'],
             'new_password' => ['required_with:current_password', 'nullable', 'string', 'min:8', 'confirmed'],

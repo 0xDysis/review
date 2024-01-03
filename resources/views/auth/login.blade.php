@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@vite('resources/sass/login.scss')
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">

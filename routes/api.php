@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ReviewApiController;
-use App\Http\Controllers\ApiKeyController;  // Add this line
+use App\Http\Controllers\API\ReviewApiController;
+use App\Http\Controllers\API\ApiKeyController;  // Add this line
 
 /*
 |--------------------------------------------------------------------------
